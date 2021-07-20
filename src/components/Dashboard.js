@@ -1,21 +1,26 @@
-import React, { useState } from "react";
-import { Card, Button, Alert, Navbar, Nav } from "react-bootstrap";
+import React from "react";
+import {
+  Navbar,
+  Nav,
+  Container,
+  Carousel,
+  Row,
+  Col,
+  Button,
+} from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
 export default function Dashboard() {
-  const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
 
   async function handleLogout() {
-    setError("");
-
     try {
       await logout();
       history.push("/home");
-    } catch {
-      setError("Failed to log out");
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
@@ -23,33 +28,61 @@ export default function Dashboard() {
     <>
       <Navbar collapseOnSelect expand="md" bg="light" variant="light">
         <Navbar.Brand>
-          <Link to="/home">Cube Gaming</Link>
+          <Link to="/">Cube Gaming</Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="">
-            <Link to="/home">Home</Link>
-            <Link to="/games">Games</Link>
             <Link to="/tournaments">Tournaments</Link>
-            <Link to="/login">Login</Link>
+            <Link to="/update-profile">Update Profile</Link>
+            <Button variant="danger" onClick={handleLogout}>
+              Logout
+            </Button>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
-      <Card>
-        <Card.Body>
-          <h2 className="text-center mb-4">Profile</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <strong>Email:</strong> {currentUser.email}
-          <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
-            Update Profile
-          </Link>
-        </Card.Body>
-      </Card>
-      <div className="w-100 text-center mt-2">
-        <Button variant="link" onClick={handleLogout}>
-          Log Out
-        </Button>
-      </div>
+
+      <Container className="my-5">
+        <Row>
+          <Col className="d-flex flex-column align-items-center justify-content-center mb-4">
+            <Row>
+              <h3>THE PERFECT PLATFORM TO EARN THROUGH GAMING!</h3>
+              <p>
+                REGISTER TODAY AND START EARNING MONEY THROUGH YOUR GAMING
+                SKILLS. WE CONDUCT TOURNAMENT FOR MOBILE AND PC GAME
+              </p>
+            </Row>
+            <Row>
+              <Button variant="outline-primary">Register Now!</Button>
+            </Row>
+          </Col>
+          <Col xs="12" md="6">
+            <Carousel>
+              <Carousel.Item interval={4000}>
+                <img
+                  className="d-block w-100 img-fluid"
+                  src="/images/pubg.jpg"
+                  alt="First slide"
+                />
+              </Carousel.Item>
+              <Carousel.Item interval={4000}>
+                <img
+                  className="d-block w-100 img-fluid"
+                  src="/images/cod.png"
+                  alt="Second slide"
+                />
+              </Carousel.Item>
+              <Carousel.Item interval={4000}>
+                <img
+                  className="d-block w-100 img-fluid"
+                  src="/images/free-fire.jpg"
+                  alt="Third slide"
+                />
+              </Carousel.Item>
+            </Carousel>
+          </Col>
+        </Row>
+      </Container>
     </>
   );
 }
