@@ -25,8 +25,12 @@ nav a {
 }
 
 .navbar-collapse a {
-  margin: 0 1rem;
+  margin: 0.1rem 1rem;
   padding: 0.4rem 0;
+}
+
+.navbar-collapse button {
+  margin: 0.2rem 1rem;
 }
 
 @media only screen and (max-width: 767px) {

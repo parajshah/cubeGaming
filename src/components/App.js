@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthProvider } from "../contexts/AuthContext";
+import { AuthProvider } from "../Context";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Signup from "./Signup";
 import Dashboard from "./Dashboard";
@@ -10,6 +10,7 @@ import UpdateProfile from "./UpdateProfile";
 import Home from "./Home";
 import Tournaments from "./Tournaments";
 import "../css/App.css";
+import AdminDashboard from "./AdminDashboard";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <AuthProvider>
         <Switch>
           <PrivateRoute exact path="/" component={Dashboard} />
+          <PrivateRoute exact path="/admin" component={AdminDashboard} />
           <PrivateRoute path="/update-profile" component={UpdateProfile} />
           <PrivateRoute path="/tournaments" component={Tournaments} />
           <Route path="/home" component={Home} />

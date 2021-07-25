@@ -1,6 +1,6 @@
 import React from "react";
 import { Nav, Navbar, Button } from "react-bootstrap";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../Context";
 import { Link, useHistory } from "react-router-dom";
 
 const Tournaments = () => {

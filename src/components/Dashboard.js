@@ -8,7 +8,7 @@ import {
   Col,
   Button,
 } from "react-bootstrap";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../Context";
 import { Link, useHistory } from "react-router-dom";
 
 export default function Dashboard() {

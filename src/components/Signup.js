@@ -8,7 +8,7 @@ import {
   Nav,
   Navbar,
 } from "react-bootstrap";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../Context";
 import { Link, useHistory } from "react-router-dom";
 
 const Signup = () => {
