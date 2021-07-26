@@ -21,6 +21,7 @@ const AdminDashboard = () => {
     addTournament,
     setupTableHead,
     setupTournaments,
+    deleteTournament,
   } = useAuth();
 
   // react-router-dom hook
@@ -37,13 +38,10 @@ const AdminDashboard = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showAdd, setShowAdd] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
   const [data, setData] = useState([]);
 
   const handleCloseAdd = () => setShowAdd(false);
   const handleShowAdd = () => setShowAdd(true);
-  const handleCloseEdit = () => setShowEdit(false);
-  const handleShowEdit = () => setShowEdit(true);
 
   useEffect(() => {
     const ac = new AbortController();
@@ -79,36 +77,30 @@ const AdminDashboard = () => {
       );
       handleCloseAdd();
     } catch (err) {
-      setError(err.message);
+      console.log(err.message);
     }
 
     setLoading(false);
   }
 
-  async function handleSubmitEdit(e) {
-    e.preventDefault();
+  const handleDelete = async (e) => {
+    const rowId =
+      e.target.parentElement.parentElement.getAttribute("data-document-id");
+    try {
+      setError("");
+      setLoading(true);
+      await deleteTournament(rowId);
+    } catch (err) {
+      console.log(err.message);
+    }
 
-    // try {
-    //   setError("");
-    //   setLoading(true);
-    //   await addTournament(
-    //     tournamentNameRef.current.value,
-    //     gameTypeRef.current.value,
-    //     tournamentDateRef.current.value,
-    //     tournamentTimeRef.current.value,
-    //     tournamentSponsorsRef.current.value
-    //   );
-    //   handleCloseAdd();
-    // } catch (err) {
-    //   setError(err.message);
-    // }
-
-    // setLoading(false);
-  }
+    setLoading(false);
+    // window.location.reload();
+  };
 
   let headers = setupTableHead();
   const tableUI = () => {
-    return data.map((tournament, index) => {
+    return data.map((tournament) => {
       const {
         tournamentName,
         gameType,
@@ -116,19 +108,21 @@ const AdminDashboard = () => {
         tournamentTime,
         tournamentSponsors,
         tournamentId,
+        documentId,
       } = tournament;
       return (
-        <tr key={tournamentId} data-id={tournamentId}>
+        <tr
+          key={tournamentId}
+          data-tournament-id={tournamentId}
+          data-document-id={documentId}
+        >
           <td>{tournamentName}</td>
           <td>{gameType}</td>
           <td>{tournamentDate}</td>
           <td>{tournamentTime}</td>
           <td>{tournamentSponsors}</td>
           <td>
-            <Button variant="info" className="m-1" onClick={handleShowEdit}>
-              Edit
-            </Button>
-            <Button variant="danger" className="m-1">
+            <Button variant="danger" className="m-1" onClick={handleDelete}>
               Delete
             </Button>
           </td>
@@ -146,8 +140,6 @@ const AdminDashboard = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="">
-            <Link to="/">Home</Link>
-            <Link to="/update-profile">Update Profile</Link>
             <Button variant="success" onClick={handleShowAdd}>
               Add Tournament
             </Button>
@@ -158,6 +150,7 @@ const AdminDashboard = () => {
         </Navbar.Collapse>
       </Navbar>
       <Container fluid className="mt-5">
+        <h2 className="my-3 text-center">Tournaments</h2>
         <Table responsive striped bordered hover id="tournaments-table">
           <thead>
             <tr>{headers}</tr>
@@ -198,55 +191,6 @@ const AdminDashboard = () => {
                 <Form.Group id="tournament-sponsors">
                   <Form.Label>Tournament Sponsors</Form.Label>
                   <Form.Control type="text" ref={tournamentSponsorsRef} />
-                  <Form.Text className="text-muted">
-                    Enter name of sponsors separated by a comma
-                  </Form.Text>
-                </Form.Group>
-                <Button disabled={loading} className="w-100 mt-3" type="submit">
-                  Go !
-                </Button>
-              </Form>
-            </Card.Body>
-          </Card>
-        </Modal.Body>
-      </Modal>
-
-      {/* Edit tournament modal */}
-      <Modal show={showEdit} onHide={handleCloseEdit}>
-        <Modal.Header>
-          <Modal.Title>Edit tournament</Modal.Title>
-          <Button variant="danger" onClick={handleCloseEdit}>
-            Close
-          </Button>
-        </Modal.Header>
-        <Modal.Body>
-          <Card>
-            <Card.Body>
-              {error && <Alert variant="danger">{error}</Alert>}
-              <Form onSubmit={handleSubmitEdit} id="add-tournament">
-                <Form.Group id="tournament-name">
-                  <Form.Label>Tournament Name</Form.Label>
-                  <Form.Control type="text" ref={tournamentNameRef} required />
-                </Form.Group>
-                <Form.Group id="game-type">
-                  <Form.Label>Game Type</Form.Label>
-                  <Form.Control type="text" ref={gameTypeRef} required />
-                </Form.Group>
-                <Form.Group id="tournament-date">
-                  <Form.Label>Tournament Date</Form.Label>
-                  <Form.Control type="date" ref={tournamentDateRef} required />
-                </Form.Group>
-                <Form.Group id="tournament-time">
-                  <Form.Label>Tournament Time</Form.Label>
-                  <Form.Control type="time" ref={tournamentTimeRef} required />
-                </Form.Group>
-                <Form.Group id="tournament-sponsors">
-                  <Form.Label>Tournament Sponsors</Form.Label>
-                  <Form.Control
-                    type="text"
-                    ref={tournamentSponsorsRef}
-                    required
-                  />
                   <Form.Text className="text-muted">
                     Enter name of sponsors separated by a comma
                   </Form.Text>

@@ -67,7 +67,10 @@ export function AuthProvider({ children }) {
     const tournaments = await getTournaments();
     let res = [];
     tournaments.forEach((doc) => {
-      res.push(doc.data());
+      let data = doc.data();
+      // adding document id to the data object (used for edit / delete)
+      data["documentId"] = doc.id;
+      res.push(data);
     });
     return res;
   };
@@ -85,7 +88,7 @@ export function AuthProvider({ children }) {
 
     // generates tournament id
     const generateString = (length) => {
-      let result = " ";
+      let result = "";
       const charactersLength = characters.length;
       for (let i = 0; i < length; i++) {
         result += characters.charAt(
@@ -115,6 +118,17 @@ export function AuthProvider({ children }) {
       .catch((err) => console.log(err.message));
   };
 
+  // delete tournament
+  const deleteTournament = (tournamentId) => {
+    db.collection("tournaments")
+      .doc(tournamentId)
+      .delete()
+      .then(() => {
+        console.log("Delete Success!");
+      })
+      .catch((err) => console.log(err.message));
+  };
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
@@ -136,6 +150,7 @@ export function AuthProvider({ children }) {
     getTournaments,
     setupTableHead,
     setupTournaments,
+    deleteTournament,
   };
 
   return (
