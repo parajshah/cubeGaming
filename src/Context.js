@@ -11,6 +11,21 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
+  // global function to generate random ids
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  // generates id
+  const generateString = (prefix = "", length = 10, suffix = "") => {
+    let result = prefix;
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    result += suffix;
+    return result;
+  };
+
   const signup = (email, password) => {
     return auth.createUserWithEmailAndPassword(email, password);
   };
@@ -83,23 +98,8 @@ export function AuthProvider({ children }) {
     tournamentTime,
     tournamentSponsors
   ) => {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    // generates tournament id
-    const generateString = (length) => {
-      let result = "";
-      const charactersLength = characters.length;
-      for (let i = 0; i < length; i++) {
-        result += characters.charAt(
-          Math.floor(Math.random() * charactersLength)
-        );
-      }
-
-      return result;
-    };
-
-    const tournamentId = generateString(20);
+    // call generator function
+    const tournamentId = generateString("tournament-", 20);
 
     db.collection("tournaments")
       .add({

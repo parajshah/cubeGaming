@@ -2,6 +2,7 @@ import React from "react";
 import { Nav, Navbar, Button } from "react-bootstrap";
 import { useAuth } from "../Context";
 import { Link, useHistory } from "react-router-dom";
+import AdminDashboard from "./AdminDashboard";
 
 const Tournaments = () => {
   const { currentUser, logout } = useAuth();
@@ -14,6 +15,10 @@ const Tournaments = () => {
     } catch (err) {
       console.log(err.message);
     }
+  }
+
+  if (currentUser.email === "parajshah2000@gmail.com") {
+    return <AdminDashboard />;
   }
 
   return (
