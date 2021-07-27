@@ -60,11 +60,15 @@ export default function Login() {
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="email">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>
+                    Email<span className="required-field"> *</span>
+                  </Form.Label>
                   <Form.Control type="email" ref={emailRef} required />
                 </Form.Group>
                 <Form.Group id="password">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label>
+                    Password<span className="required-field"> *</span>
+                  </Form.Label>
                   <Form.Control type="password" ref={passwordRef} required />
                 </Form.Group>
                 <Button disabled={loading} className="w-100 mt-3" type="submit">

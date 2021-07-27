@@ -26,8 +26,21 @@ export function AuthProvider({ children }) {
     return result;
   };
 
-  const signup = (email, password) => {
-    return auth.createUserWithEmailAndPassword(email, password);
+  const signup = async (email, password, firstName, lastName, phone) => {
+    const cubeId = generateString("cube_id_", 10);
+
+    return auth.createUserWithEmailAndPassword(email, password).then(() => {
+      db.collection("users").add({
+        cubeId: cubeId,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        email: email,
+        pubgUsername: "",
+        valorantUserName: "",
+        freeFireUsername: "",
+      });
+    });
   };
 
   const login = (email, password) => {
@@ -99,7 +112,7 @@ export function AuthProvider({ children }) {
     tournamentSponsors
   ) => {
     // call generator function
-    const tournamentId = generateString("tournament-", 20);
+    const tournamentId = generateString("t_id_", 20);
 
     db.collection("tournaments")
       .add({

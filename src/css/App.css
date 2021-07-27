@@ -78,3 +78,15 @@ ol.carousel-indicators {
 }
 
 /* Carousel End */
+
+/* Card */
+
+.required-field {
+  color: red;
+}
+
+.form-group {
+  margin: 1.5rem 0;
+}
+
+/* Card End */

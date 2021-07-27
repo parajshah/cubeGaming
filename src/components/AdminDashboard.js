@@ -68,6 +68,7 @@ const AdminDashboard = () => {
     try {
       setError("");
       setLoading(true);
+      const ac = new AbortController();
       await addTournament(
         tournamentNameRef.current.value,
         gameTypeRef.current.value,
@@ -76,6 +77,10 @@ const AdminDashboard = () => {
         tournamentSponsorsRef.current.value
       );
       handleCloseAdd();
+      // Refresh page
+      history.push("/");
+      history.push("/tournaments");
+      return () => ac.abort();
     } catch (err) {
       console.log(err.message);
     }
@@ -89,7 +94,11 @@ const AdminDashboard = () => {
     try {
       setError("");
       setLoading(true);
+      const ac = new AbortController();
       await deleteTournament(rowId);
+      history.push("/");
+      history.push("/tournaments");
+      return () => ac.abort();
     } catch (err) {
       console.log(err.message);
     }

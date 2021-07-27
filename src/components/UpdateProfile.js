@@ -86,7 +86,9 @@ export default function UpdateProfile() {
               {error && <Alert variant="danger">{error}</Alert>}
               <Form onSubmit={handleSubmit}>
                 <Form.Group id="email">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>
+                    Email<span className="required-field"> *</span>
+                  </Form.Label>
                   <Form.Control
                     type="email"
                     ref={emailRef}
