@@ -9,8 +9,10 @@ import {
   Button,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { useAuth } from "../Context";
 
 const Home = () => {
+  const { currentUser } = useAuth();
   return (
     <>
       <Navbar collapseOnSelect expand="md" bg="light" variant="light">

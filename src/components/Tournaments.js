@@ -17,7 +17,7 @@ const Tournaments = () => {
     }
   }
 
-  if (currentUser.email === "parajshah2000@gmail.com") {
+  if (currentUser && currentUser.email === "parajshah2000@gmail.com") {
     return <AdminDashboard />;
   }
 
@@ -29,11 +29,21 @@ const Tournaments = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="">
-          <Link to="/">Home</Link>
-          <Link to="/update-profile">Update Profile</Link>
-          <Button variant="danger" onClick={handleLogout}>
-            Logout
-          </Button>
+          {currentUser ? (
+            <>
+              <Link to="/">Home</Link>
+              <Link to="/update-profile">Update Profile</Link>
+              <Button variant="danger" onClick={handleLogout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Link to="/home">Home</Link>
+              <Link to="/login">Login</Link>
+              <Link to="/signup">Sign Up</Link>
+            </>
+          )}
         </Nav>
       </Navbar.Collapse>
     </Navbar>
