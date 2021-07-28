@@ -82,7 +82,7 @@ const AdminDashboard = () => {
       history.push("/tournaments");
       return () => ac.abort();
     } catch (err) {
-      console.log(err.message);
+      setError(err.message);
     }
 
     setLoading(false);
@@ -100,7 +100,7 @@ const AdminDashboard = () => {
       history.push("/tournaments");
       return () => ac.abort();
     } catch (err) {
-      console.log(err.message);
+      setError(err.message);
     }
 
     setLoading(false);

@@ -25,8 +25,10 @@ export default function Login() {
     try {
       setError("");
       setLoading(true);
+      const ac = new AbortController();
       await login(emailRef.current.value, passwordRef.current.value);
       history.push("/");
+      return () => ac.abort();
     } catch {
       setError("Failed to log in");
     }

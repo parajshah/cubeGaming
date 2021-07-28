@@ -18,10 +18,6 @@ const Signup = () => {
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
   const phoneRef = useRef();
-  // const whatsAppPhoneRef = useRef();
-  // const pubgUsernameRef = useRef();
-  // const valorantUsernameRef = useRef();
-  // const freeFireUsernameRef = useRef();
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -132,30 +128,6 @@ const Signup = () => {
                     +/-)
                   </Form.Text>
                 </Form.Group>
-                {/* <Form.Group id="whatsApp-phone">
-                  <Form.Label>
-                    WhatsApp Phone Number
-                    <span className="required-field"> *</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="number"
-                    ref={whatsAppPhoneRef}
-                    required
-                    placeholder="Example... 8370215813 "
-                  />
-                </Form.Group>
-                <Form.Group id="pubg-username">
-                  <Form.Label>Pubg Username</Form.Label>
-                  <Form.Control type="text" ref={pubgUsernameRef} />
-                </Form.Group>
-                <Form.Group id="valorant-username">
-                  <Form.Label>Valorant Username</Form.Label>
-                  <Form.Control type="text" ref={valorantUsernameRef} />
-                </Form.Group>
-                <Form.Group id="free-fire-username">
-                  <Form.Label>Free fire Username</Form.Label>
-                  <Form.Control type="text" ref={freeFireUsernameRef} />
-                </Form.Group> */}
                 <Button disabled={loading} className="w-100 mt-3" type="submit">
                   Sign Up
                 </Button>

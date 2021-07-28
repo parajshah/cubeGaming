@@ -26,6 +26,7 @@ export function AuthProvider({ children }) {
     return result;
   };
 
+  // users
   const signup = async (email, password, firstName, lastName, phone) => {
     const cubeId = generateString("cube_id_", 10);
 
@@ -36,9 +37,10 @@ export function AuthProvider({ children }) {
         lastName: lastName,
         phone: phone,
         email: email,
-        pubgUsername: "",
-        valorantUserName: "",
-        freeFireUsername: "",
+        pubgUsername: "Not set",
+        valorantUsername: "Not set",
+        freeFireUsername: "Not set",
+        whatsAppPhone: "Not set",
       });
     });
   };
@@ -55,12 +57,59 @@ export function AuthProvider({ children }) {
     return auth.sendPasswordResetEmail(email);
   };
 
-  const updateEmail = (email) => {
-    return currentUser.updateEmail(email);
+  const updateEmail = (email, documentId) => {
+    return currentUser.updateEmail(email).then(() => {
+      db.collection("users").doc(documentId).update({
+        email: email,
+      });
+    });
   };
 
   const updatePassword = (password) => {
     return currentUser.updatePassword(password);
+  };
+
+  const updateCurrentUserDetails = (
+    documentId,
+    firstName,
+    lastName = "",
+    pubgUsername = "",
+    valorantUsername = "",
+    freeFireUsername = "",
+    whatsAppPhone = ""
+  ) => {
+    return db.collection("users").doc(documentId).update({
+      firstName: firstName,
+      lastName: lastName,
+      pubgUsername: pubgUsername,
+      valorantUsername: valorantUsername,
+      freeFireUsername: freeFireUsername,
+      whatsAppPhone: whatsAppPhone,
+    });
+  };
+
+  const getCurrentUserData = async () => {
+    if (currentUser) {
+      return db
+        .collection("users")
+        .where("email", "==", currentUser.email)
+        .get()
+        .then((snapshot) => {
+          return snapshot.docs;
+        });
+    }
+  };
+
+  const setupCurrentUserData = async () => {
+    const userSnapshot = await getCurrentUserData();
+    let res = [];
+    userSnapshot.forEach((doc) => {
+      const data = doc.data();
+      data["document-id"] = doc.id;
+      // global currentUserData
+      res.push(data);
+    });
+    return res;
   };
 
   // tournaments
@@ -164,6 +213,8 @@ export function AuthProvider({ children }) {
     setupTableHead,
     setupTournaments,
     deleteTournament,
+    setupCurrentUserData,
+    updateCurrentUserDetails,
   };
 
   return (
