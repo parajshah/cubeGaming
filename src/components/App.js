@@ -9,8 +9,9 @@ import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import Home from "./Home";
 import Tournaments from "./Tournaments";
+import Register from "./Register";
+
 import "../css/App.css";
-import AdminDashboard from "./AdminDashboard";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <PrivateRoute exact path="/" component={Dashboard} />
           <Route path="/update-profile" component={UpdateProfile} />
           <Route path="/tournaments" component={Tournaments} />
+          <Route path="/register" component={Register} />
           <Route path="/home" component={Home} />
           <Route path="/signup" component={Signup} />
           <Route path="/login" component={Login} />

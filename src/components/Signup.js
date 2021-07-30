@@ -43,8 +43,8 @@ const Signup = () => {
       );
       history.push("/");
       return () => ac.abort();
-    } catch {
-      setError("Failed to create an account");
+    } catch (err) {
+      setError(err.message);
     }
 
     setLoading(false);

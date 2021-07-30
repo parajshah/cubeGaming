@@ -37,10 +37,10 @@ export function AuthProvider({ children }) {
         lastName: lastName,
         phone: phone,
         email: email,
-        pubgUsername: "Not set",
-        valorantUsername: "Not set",
-        freeFireUsername: "Not set",
-        whatsAppPhone: "Not set",
+        pubgUsername: "",
+        valorantUsername: "",
+        freeFireUsername: "",
+        whatsAppPhone: "",
       });
     });
   };
@@ -174,8 +174,6 @@ export function AuthProvider({ children }) {
       })
       .then(() => {
         console.log("Add success!");
-        const addTournamentForm = document.querySelector("#add-tournament");
-        addTournamentForm.reset();
       })
       .catch((err) => console.log(err.message));
   };

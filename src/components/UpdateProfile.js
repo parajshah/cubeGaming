@@ -213,6 +213,7 @@ export default function UpdateProfile() {
                               <Form.Control
                                 type="text"
                                 ref={pubgUsernameRef}
+                                placeholder="Not Set"
                                 defaultValue={pubgUsername}
                               />
                             </Form.Group>
@@ -221,6 +222,7 @@ export default function UpdateProfile() {
                               <Form.Control
                                 type="text"
                                 ref={valorantUsernameRef}
+                                placeholder="Not Set"
                                 defaultValue={valorantUsername}
                               />
                             </Form.Group>
@@ -229,6 +231,7 @@ export default function UpdateProfile() {
                               <Form.Control
                                 type="text"
                                 ref={freeFireUsernameRef}
+                                placeholder="Not Set"
                                 defaultValue={freeFireUsername}
                               />
                             </Form.Group>
@@ -240,8 +243,9 @@ export default function UpdateProfile() {
                               <Form.Control
                                 type="number"
                                 ref={whatsAppPhoneRef}
-                                required
+                                placeholder="Not Set"
                                 defaultValue={whatsAppPhone}
+                                required
                               />
                             </Form.Group>
                             <Form.Group id="phone">

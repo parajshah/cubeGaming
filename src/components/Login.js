@@ -29,8 +29,8 @@ export default function Login() {
       await login(emailRef.current.value, passwordRef.current.value);
       history.push("/");
       return () => ac.abort();
-    } catch {
-      setError("Failed to log in");
+    } catch (err) {
+      setError(err.message);
     }
 
     setLoading(false);

@@ -159,13 +159,19 @@ const AdminDashboard = () => {
         </Navbar.Collapse>
       </Navbar>
       <Container fluid className="mt-5">
-        <h2 className="my-3 text-center">Tournaments</h2>
-        <Table responsive striped bordered hover id="tournaments-table">
-          <thead>
-            <tr>{headers}</tr>
-          </thead>
-          <tbody>{tableUI()}</tbody>
-        </Table>
+        {data.length > 0 ? (
+          <>
+            <h2 className="my-3 text-center">Tournaments</h2>
+            <Table responsive striped bordered hover id="tournaments-table">
+              <thead>
+                <tr>{headers}</tr>
+              </thead>
+              <tbody>{tableUI()}</tbody>
+            </Table>
+          </>
+        ) : (
+          <h2 className="my-3 text-center">No Tournaments</h2>
+        )}
       </Container>
 
       {/* Add tournament modal */}
