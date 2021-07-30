@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Nav,
   Navbar,
@@ -29,7 +29,12 @@ const Tournaments = () => {
   }
 
   const handleRegister = (e) => {
-    console.log(e.target);
+    const tournamentId = e.target.getAttribute("data-tournament-id");
+    if (currentUser == null) {
+      history.push("/login");
+    } else {
+      history.push(`/register/${tournamentId}`);
+    }
   };
 
   useEffect(() => {
@@ -42,7 +47,7 @@ const Tournaments = () => {
     return () => ac.abort();
   }, []);
 
-  const tableUI = () => {
+  const tournamentUI = () => {
     return data.map((tournament) => {
       const {
         tournamentName,
@@ -86,7 +91,7 @@ const Tournaments = () => {
 
       const images = [
         "/images/pubg.jpg",
-        "/images/cod.png",
+        "/images/valorant.jpg",
         "/images/free-fire.jpg",
       ];
 
@@ -103,7 +108,7 @@ const Tournaments = () => {
         <Col xs="12" md="6" lg="4" className="my-3" key={tournamentId}>
           <Card>
             <Card.Body>
-              <h2 className="text-center mb-4">{tournamentName}</h2>
+              <h3 className="text-center mb-4">{tournamentName}</h3>
               <img src={imageSrc} className="img img-fluid" />
               <p className="mt-2 text-center mb-0">
                 {date}, {time}
@@ -164,7 +169,7 @@ const Tournaments = () => {
       </Navbar>
       <Container>
         <h2 className="my-3 text-center">Tournaments</h2>
-        <Row>{tableUI()}</Row>
+        <Row>{tournamentUI()}</Row>
       </Container>
     </>
   );

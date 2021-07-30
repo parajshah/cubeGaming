@@ -106,7 +106,6 @@ export function AuthProvider({ children }) {
     userSnapshot.forEach((doc) => {
       const data = doc.data();
       data["document-id"] = doc.id;
-      // global currentUserData
       res.push(data);
     });
     return res;
@@ -114,7 +113,7 @@ export function AuthProvider({ children }) {
 
   // tournaments
 
-  // get tournaments
+  // get all tournaments
   const getTournaments = async () => {
     return db
       .collection("tournaments")
@@ -124,6 +123,31 @@ export function AuthProvider({ children }) {
       });
   };
 
+  // get single tournament
+  const getTournament = async (id) => {
+    return db
+      .collection("tournaments")
+      .where("tournamentId", "==", id)
+      .get()
+      .then((snapshot) => {
+        return snapshot.docs;
+      });
+  };
+
+  // returns single tournament
+  const setupTournament = async (id) => {
+    const tournaments = await getTournament(id);
+    let res = [];
+    tournaments.forEach((doc) => {
+      let data = doc.data();
+      // adding document id to the data object (used for edit / delete)
+      data["documentId"] = doc.id;
+      res.push(data);
+    });
+    return res;
+  };
+
+  // returns table headers
   const setupTableHead = () => {
     const headings = [
       "Tournament Name",
@@ -140,6 +164,7 @@ export function AuthProvider({ children }) {
     return res;
   };
 
+  // returns all tournaments
   const setupTournaments = async () => {
     const tournaments = await getTournaments();
     let res = [];
@@ -207,8 +232,10 @@ export function AuthProvider({ children }) {
     updateEmail,
     updatePassword,
     addTournament,
+    getTournament,
     getTournaments,
     setupTableHead,
+    setupTournament,
     setupTournaments,
     deleteTournament,
     setupCurrentUserData,

@@ -53,7 +53,14 @@ export default function Dashboard() {
               </p>
             </Row>
             <Row>
-              <Button variant="outline-primary">Register Now!</Button>
+              <Button
+                variant="outline-primary"
+                onClick={() => {
+                  history.push("/tournaments");
+                }}
+              >
+                Register Now!
+              </Button>
             </Row>
           </Col>
           <Col xs="12" md="6">

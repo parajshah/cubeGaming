@@ -8,11 +8,12 @@ import {
   Col,
   Button,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../Context";
 
 const Home = () => {
   const { currentUser } = useAuth();
+  const history = useHistory();
   return (
     <>
       <Navbar collapseOnSelect expand="md" bg="light" variant="light">
@@ -39,7 +40,14 @@ const Home = () => {
               </p>
             </Row>
             <Row>
-              <Button variant="outline-primary">Register Now!</Button>
+              <Button
+                variant="outline-primary"
+                onClick={() => {
+                  history.push("/tournaments");
+                }}
+              >
+                Register Now!
+              </Button>
             </Row>
           </Col>
           <Col xs="12" md="6">
